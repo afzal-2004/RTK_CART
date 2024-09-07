@@ -1,0 +1,9 @@
+.cartBill {
+    @apply sm:w-[20%] w-full sm:flex sm:flex-col sm:justify-center items-center sm:right-0 absolute top-[0vh];
+    background-color: rgba(100, 100, 100, 0.9);
+
+}
+
+.scrollProperty::-webkit-scrollbar {
+    display: none;
+}

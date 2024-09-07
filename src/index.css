@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100vw;
+    height: 100vh;
+
+}
+
+body {
+    background-color: rgba(55, 55, 55, 0.9);
+    color: whitesmoke;
+
+}
