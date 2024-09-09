@@ -1,6 +1,8 @@
 import "./Components.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { addTocart } from "../redux/CartSlice";
+import { useDispatch } from "react-redux";
 export const Home = () => {
   return (
     <>
@@ -13,6 +15,8 @@ export const Home = () => {
 
 const Card = () => {
   const [Data, setData] = useState([]);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     axios
       .get("https://fakestoreapi.com/products")
@@ -40,7 +44,10 @@ const Card = () => {
             />
 
             <h4 className=" "> ₹ {data.price}</h4>
-            <button className=" bg-blue-700 text-white p-2  rounded-lg font-semibold hover:bg-blue-500">
+            <button
+              className=" bg-blue-700 text-white p-2  rounded-lg font-semibold hover:bg-blue-500"
+              onClick={() => dispatch(addTocart(data))}
+            >
               {" "}
               Add to cart
             </button>
