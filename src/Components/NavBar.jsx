@@ -4,7 +4,7 @@ import { BsCart } from "react-icons/bs";
 export const NavBar = () => {
   return (
     <>
-      <div className=" flex justify-between p-3 bg-slate-500 items-center  ">
+      <div className=" flex justify-between p-3 bg-slate-500 items-center  max-w-[100vw] ">
         <h1 className="text-[35px]"> React Cart</h1>
         <ul className="flex  justify-center gap-3 text-[20px] items-center">
           <li>
