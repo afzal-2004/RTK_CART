@@ -6,6 +6,7 @@ const initialState = {
   items: [],
   totalPrice: 0,
   totalitems: 0,
+  quantity: 0,
 };
 export const CartSlice = createSlice({
   name: "cart",
@@ -22,6 +23,9 @@ export const CartSlice = createSlice({
         const newItems = { ...action.payload, quantity: 1 };
         state.items.push(newItems);
         state.totalitems += 1;
+        console.log(newItems);
+
+        console.log();
       }
       state.totalPrice += action.payload.price;
     },
@@ -30,13 +34,33 @@ export const CartSlice = createSlice({
       const index = state.items.findIndex(
         (items) => items.id === action.payload.id
       );
-      state.totalitems -= 1;
-      // state.totalPrice -=
-      //   state.items[index].price * state.items[index].quantity;
-      state.items.splice(index, 1);
+      if (index !== -1) {
+        const itemPrice = state.items[index].price;
+        const itemQuantity = state.items[index].quantity;
+
+        state.totalPrice -= itemPrice * itemQuantity;
+        state.totalitems -= 1;
+
+        state.items.splice(index, 1);
+      }
+    },
+    increaseItemCount: (state, action) => {
+      const index = state.items.findIndex(
+        (items) => items.id === action.payload.id
+      );
+      state.items[index].quantity += 1;
+      state.totalPrice += action.payload.price;
+    },
+    decreaseItemCount: (state, action) => {
+      const index = state.items.findIndex(
+        (items) => items.id === action.payload.id
+      );
+      state.items[index].quantity -= 1;
+      state.totalPrice -= action.payload.price;
     },
   },
 });
 
-export const { addTocart, removeTocart } = CartSlice.actions;
+export const { addTocart, removeTocart, increaseItemCount, decreaseItemCount } =
+  CartSlice.actions;
 export default CartSlice.reducer;

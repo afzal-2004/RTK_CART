@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { addTocart } from "../redux/CartSlice";
 import { useDispatch } from "react-redux";
+
 export const Home = () => {
   return (
     <>
@@ -19,7 +20,7 @@ const Card = () => {
 
   useEffect(() => {
     axios
-      .get("https://fakestoreapi.com/products")
+      .get("/data.json")
       .then((res) => {
         console.log(res.data);
         setData(res.data);
@@ -43,7 +44,7 @@ const Card = () => {
               className=" w-[300px] h-[300px]   "
             />
 
-            <h4 className=" "> ₹ {data.price}</h4>
+            <h4 className=" "> $ {data.price}</h4>
             <button
               className=" bg-blue-700 text-white p-2  rounded-lg font-semibold hover:bg-blue-500"
               onClick={() => dispatch(addTocart(data))}

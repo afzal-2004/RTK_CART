@@ -3,25 +3,79 @@ import { IoMdAdd } from "react-icons/io";
 import { RiSubtractFill } from "react-icons/ri";
 import { MdDelete } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { removeTocart } from "../redux/CartSlice";
+import {
+  removeTocart,
+  increaseItemCount,
+  decreaseItemCount,
+} from "../redux/CartSlice";
+import { Link } from "react-router-dom";
 export default function Cart() {
+  const itemsCount = useSelector((state) => state.totalitems);
+
+  console.log(itemsCount);
   return (
     <>
-      <main className=" relative  ">
-        <div className="  overflow-x-hidden overflow-scroll h-[90vh] w-[80%] scrollProperty">
+      <main className=" sm:relative  ">
+        <div
+          className={` overflow-x-hidden  overflow-scroll ${
+            itemsCount && "sm:h-[90vh] sm:w-[75%] max-h-[62vh]"
+          } scrollProperty `}
+        >
           <AddItems />
         </div>
-        <CartBill />
+
+        {itemsCount ? (
+          <CartBill />
+        ) : (
+          <>
+            <div
+              className="  text-center 
+            h-[90vh] w-[100%] flex  justify-center items-center  gap-4"
+            >
+              Oops Cart is Empty
+              <Link to={"/"}>
+                <button className=" bg-red-400 p-3 rounded-md">
+                  Add items inside cart
+                </button>
+              </Link>
+            </div>
+          </>
+        )}
       </main>
     </>
   );
 }
 
 const CartBill = () => {
+  let delivery;
+  const count = useSelector((state) => state.totalitems);
+
+  const TotalSum = useSelector((state) => state.totalPrice);
+
+  if (TotalSum > 500) {
+    delivery = 0;
+  } else {
+    delivery = 50;
+  }
+  const FixedPrice = TotalSum + delivery;
+
   return (
     <>
-      <div className="w-[20%] h-[90vh]    cartBill">
-        <h1>Cart Bill</h1>
+      <div className="sm:w-[20%] sm:h-[90vh]    cartBill">
+        <div>
+          <h1 className=" font-semibold  sm:text-[25px] text-[20px]">
+            Cart Bill
+          </h1>
+          <h1 className=" mt-3">{`Total Items : ${count}`}</h1>
+
+          <h2>Delivery Charge : ${delivery}</h2>
+          <h1> {`Total Payable Amount :  $${FixedPrice.toFixed(2)}`}</h1>
+
+          <button className=" bg-red-500 rounded-lg p-3 mt-4">
+            {" "}
+            {`Pay  $${FixedPrice.toFixed(2)} Amount`}
+          </button>
+        </div>
       </div>
     </>
   );
@@ -29,8 +83,7 @@ const CartBill = () => {
 
 const AddItems = () => {
   const dispatch = useDispatch();
-  const count = useSelector((state) => state.totalitems);
-  console.log(count);
+
   const cartItems = useSelector((state) => state.items);
 
   return (
@@ -42,18 +95,24 @@ const AddItems = () => {
               <img
                 src={item.image}
                 alt=""
-                className="  max-w-[300px] max-h-[300px]"
+                className=" w-[150px] h-[150px]  sm:max-w-[300px] sm:max-h-[300px]"
               />
 
               <div>
-                <h4 className=" "> {item.price}</h4>
+                <h4 className=" "> ₹{item.price}</h4>
               </div>
             </section>
             <div className=" flex  items-center gap-2 text-[35px]">
-              <IoMdAdd className="  border-2 border-gray-100   " />
-              0
-              <RiSubtractFill className="  border-2 border-gray-100 " />
-              <MdDelete onClick={() => dispatch(removeTocart(item.id))} />
+              <IoMdAdd
+                className="  border-2 border-gray-100   "
+                onClick={() => dispatch(increaseItemCount(item))}
+              />
+              {item.quantity}
+              <RiSubtractFill
+                className="  border-2 border-gray-100 "
+                onClick={() => dispatch(decreaseItemCount(item))}
+              />
+              <MdDelete onClick={() => dispatch(removeTocart(item))} />
             </div>
           </div>
           <hr />
