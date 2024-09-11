@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { addTocart } from "../redux/CartSlice";
 import { useDispatch } from "react-redux";
-
+import { toast } from "react-toastify";
 export const Home = () => {
   return (
     <>
@@ -47,7 +47,10 @@ const Card = () => {
             <h4 className=" "> $ {data.price}</h4>
             <button
               className=" bg-blue-700 text-white p-2  rounded-lg font-semibold hover:bg-blue-500"
-              onClick={() => dispatch(addTocart(data))}
+              onClick={() => {
+                dispatch(addTocart(data));
+                toast.success("Items Add SuccessFully "), {};
+              }}
             >
               {" "}
               Add to cart

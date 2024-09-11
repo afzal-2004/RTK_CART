@@ -8,11 +8,11 @@ import {
   increaseItemCount,
   decreaseItemCount,
 } from "../redux/CartSlice";
+import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 export default function Cart() {
   const itemsCount = useSelector((state) => state.totalitems);
 
-  console.log(itemsCount);
   return (
     <>
       <main className=" sm:relative  ">
@@ -99,20 +99,31 @@ const AddItems = () => {
               />
 
               <div>
-                <h4 className=" "> ₹{item.price}</h4>
+                <h4 className=" "> ${item.price}</h4>
               </div>
             </section>
             <div className=" flex  items-center gap-2 text-[35px]">
               <IoMdAdd
                 className="  border-2 border-gray-100   "
-                onClick={() => dispatch(increaseItemCount(item))}
+                onClick={() => {
+                  dispatch(increaseItemCount(item));
+                  toast.success(" Items Count Increase ");
+                }}
               />
               {item.quantity}
               <RiSubtractFill
                 className="  border-2 border-gray-100 "
-                onClick={() => dispatch(decreaseItemCount(item))}
+                onClick={() => {
+                  dispatch(decreaseItemCount(item));
+                  toast.success("  One Items  is Remove ");
+                }}
               />
-              <MdDelete onClick={() => dispatch(removeTocart(item))} />
+              <MdDelete
+                onClick={() => {
+                  dispatch(removeTocart(item));
+                  toast.success("Items is delated Succefully ");
+                }}
+              />
             </div>
           </div>
           <hr />
