@@ -18,7 +18,7 @@ export default function Cart() {
       <main className=" sm:relative  ">
         <div
           className={` overflow-x-hidden  overflow-scroll ${
-            itemsCount && "sm:h-[90vh] sm:w-[75%] max-h-[62vh]"
+            itemsCount && "sm:h-[90vh] sm:w-[75%] h-[62vh]"
           } scrollProperty `}
         >
           <AddItems />
@@ -107,7 +107,9 @@ const AddItems = () => {
                 className="  border-2 border-gray-100   "
                 onClick={() => {
                   dispatch(increaseItemCount(item));
-                  toast.success(" Items Count Increase ");
+                  toast.success(" Items Count Increase ", {
+                    autoClose: 2000,
+                  });
                 }}
               />
               {item.quantity}
@@ -115,13 +117,17 @@ const AddItems = () => {
                 className="  border-2 border-gray-100 "
                 onClick={() => {
                   dispatch(decreaseItemCount(item));
-                  toast.success("  One Items  is Remove ");
+                  toast.success("  One Items  is Remove ", {
+                    autoClose: 2000,
+                  });
                 }}
               />
               <MdDelete
                 onClick={() => {
                   dispatch(removeTocart(item));
-                  toast.success("Items is delated Succefully ");
+                  toast.success("Items is delated Succefully ", {
+                    autoClose: 2000,
+                  });
                 }}
               />
             </div>

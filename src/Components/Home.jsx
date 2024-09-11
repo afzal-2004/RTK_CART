@@ -49,7 +49,9 @@ const Card = () => {
               className=" bg-blue-700 text-white p-2  rounded-lg font-semibold hover:bg-blue-500"
               onClick={() => {
                 dispatch(addTocart(data));
-                toast.success("Items Add SuccessFully "), {};
+                toast.success("Items Add SuccessFully ", {
+                  autoClose: 2000,
+                });
               }}
             >
               {" "}
